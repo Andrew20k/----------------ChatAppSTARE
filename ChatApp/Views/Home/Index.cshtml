@@ -1,0 +1,150 @@
+﻿@model IndexVm
+@{
+    ViewData["Title"] = "Group Chat";
+    var username = Model.Username;
+}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ChatApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="~/ChatApp.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            margin: auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+            .chat-header h1 {
+                font-family: Arial, sans-serif;
+                font-size: 2rem;
+                color: #333;
+                margin: 0;
+                padding: 0.5rem;
+                border-bottom: 2px solid #0072ff;
+            }
+
+        .message-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+            .message-input input {
+                flex-grow: 1;
+                padding: 0.75rem;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1rem;
+            }
+
+            .message-input button {
+                padding: 0.75rem;
+                background: #0072ff;
+                border: none;
+                border-radius: 5px;
+                color: #fff;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+                .message-input button:hover {
+                    background: #005bb5;
+                }
+
+                .message-input button .fa-paper-plane {
+                    margin-right: 0.5rem;
+                }
+
+        #userMessages {
+            list-style: none;
+            padding: 0;
+            flex-grow: 1;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+            #userMessages li {
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid #ddd;
+                margin-bottom: 0.5rem;
+                background: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+            }
+
+                #userMessages li .username {
+                    font-weight: bold;
+                    color: #0072ff;
+                    margin-bottom: 0.25rem;
+         
+                
+                }
+
+                #userMessages li .timestamp {
+                    font-size: 0.75rem;
+                    color: #999;
+                    align-self: flex-end;
+                }
+
+                #userMessages li .message {
+                    font-size: 1rem;
+                    color: #333;
+                }
+
+        
+    </style>
+</head>
+<body>
+    <input hidden id="user" value="@username" />
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1 class="display-4">Jesteś zalogowany jako @username</h1>
+        </div>
+        <div class="message-input">
+            <input placeholder="Wiadomość" id="userMessage" class="form-control" />
+            <button id="buttonSend" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> 
+            </button>
+        </div>
+        <ul id="userMessages" class="list-unstyled"></ul>
+    </div>
+
+    @section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+        <script src="js/groupChat.js"></script>
+    }
+</body>
+</html>
